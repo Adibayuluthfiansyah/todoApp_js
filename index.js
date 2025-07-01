@@ -14,16 +14,25 @@ addBtn.addEventListener("click", function addTask() {
     li.appendChild(span);
   }
   todoInput.value = "";
+  saveData();
 
-  mainList.addEventListener(
-    "click",
-    function (e) {
-      if (e.target.tagName === "LI") {
-        e.target.classList.toggle("checked");
-      } else if (e.target.tagName === "SPAN") {
-        e.target.parentElement.remove();
-      }
-    },
-    false
-  );
+  mainList.addEventListener("click", function (e) {
+    if (e.target.tagName === "LI") {
+      e.target.classList.toggle("checked");
+      saveData();
+    } else if (e.target.tagName === "SPAN") {
+      e.target.parentElement.remove();
+      saveData();
+    }
+  });
 });
+
+function saveData() {
+  localStorage.setItem("data", mainList.innerHTML);
+}
+
+function showTaskList() {
+  mainList.innerHTML = localStorage.getItem("data");
+}
+
+showTaskList();
